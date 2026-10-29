@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 
 from functions.data.get_current_price import get_current_price
 from functions.data.save_price_to_csv import save_price_to_csv
@@ -161,6 +162,27 @@ def main():
         graph_path
     )
 
+    git_path = r"C:\Program Files\Git\cmd\git.exe"
+
+    subprocess.run(
+        [git_path, "add", "."]
+    )
+
+    commit_result = subprocess.run(
+        [
+            git_path,
+            "commit",
+            "-m",
+            "Automatic update"
+        ],
+        capture_output=True,
+        text=True
+    )
+
+    if "nothing to commit" not in commit_result.stdout:
+        subprocess.run(
+            [git_path, "push"]
+        )
 
 if __name__ == "__main__":
     main()
