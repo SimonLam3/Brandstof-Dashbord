@@ -325,7 +325,14 @@ def create_dashboard(
 
     </style>
 
-    </head>
+    <head>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <meta charset="UTF-8">
+
 
     <body>
 
