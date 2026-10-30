@@ -185,7 +185,7 @@ def main():
 
     if commit_result.returncode == 0:
 
-        # Fetch and rebase on latest remote changes
+        # Sync with GitHub first
         pull_result = subprocess.run(
             [git_path, "pull", "--rebase", "origin", "main"],
             cwd=repo_path,
@@ -197,17 +197,19 @@ def main():
         print(pull_result.stdout)
         print(pull_result.stderr)
 
-        # Push
-        push_result = subprocess.run(
-            [git_path, "push", "origin", "main"],
-            cwd=repo_path,
-            capture_output=True,
-            text=True
-        )
+        # Only push if pull succeeded
+        if pull_result.returncode == 0:
 
-        print("PUSH:")
-        print(push_result.stdout)
-        print(push_result.stderr)
+            push_result = subprocess.run(
+                [git_path, "push", "origin", "main"],
+                cwd=repo_path,
+                capture_output=True,
+                text=True
+            )
+
+            print("PUSH:")
+            print(push_result.stdout)
+            print(push_result.stderr)
 
 if __name__ == "__main__":
     main()
