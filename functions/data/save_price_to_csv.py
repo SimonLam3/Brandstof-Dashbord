@@ -1,5 +1,6 @@
 import csv
-from datetime import date, datetime
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 def save_price_to_csv(
@@ -51,7 +52,10 @@ def save_price_to_csv(
             )
 
             today = (
-                date.today()
+                datetime.now(
+                    ZoneInfo("Europe/Amsterdam")
+                )
+                .date()
                 .isoformat()
             )
 
@@ -83,9 +87,11 @@ def save_price_to_csv(
                 ])
 
             writer.writerow([
-                datetime.now().strftime(
-                    "%Y-%m-%d %H:%M:%S"
-                ),
+            datetime.now(
+                ZoneInfo("Europe/Amsterdam")
+            ).strftime(
+                "%Y-%m-%d %H:%M:%S"
+            ),
                 pump_price,
                 discount,
                 net_price

@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 
 def create_dashboard(
@@ -30,7 +31,9 @@ def create_dashboard(
     Create interactive fuel dashboard.
     """
 
-    last_check = datetime.now().strftime(
+    last_check = datetime.now(
+        ZoneInfo("Europe/Amsterdam")
+    ).strftime(
         "%d-%m-%Y %H:%M:%S"
     )
 
