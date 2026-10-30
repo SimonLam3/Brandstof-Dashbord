@@ -179,6 +179,9 @@ def main():
         text=True
     )
 
+    print(commit_result.stdout)
+    print(commit_result.stderr)
+
     if "nothing to commit" not in commit_result.stdout:
         subprocess.run(
             [git_path, "push"]
