@@ -165,32 +165,15 @@ def main():
     git_path = r"C:\Program Files\Git\cmd\git.exe"
     repo_path = Path(__file__).parent
 
-    # Pull latest changes first
-    pull_result = subprocess.run(
-        [git_path, "pull", "--rebase"],
-        cwd=repo_path,
-        capture_output=True,
-        text=True
-    )
-
-    print("PULL:")
-    print(pull_result.stdout)
-    print(pull_result.stderr)
-
     # Stage changes
     subprocess.run(
         [git_path, "add", "."],
         cwd=repo_path
     )
 
-    # Create commit
+    # Commit changes
     commit_result = subprocess.run(
-        [
-            git_path,
-            "commit",
-            "-m",
-            "Automatic update"
-        ],
+        [git_path, "commit", "-m", "Automatic update"],
         cwd=repo_path,
         capture_output=True,
         text=True
@@ -200,10 +183,23 @@ def main():
     print(commit_result.stdout)
     print(commit_result.stderr)
 
-    # Push only if a commit was created
     if commit_result.returncode == 0:
+
+        # Fetch and rebase on latest remote changes
+        pull_result = subprocess.run(
+            [git_path, "pull", "--rebase", "origin", "main"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True
+        )
+
+        print("PULL:")
+        print(pull_result.stdout)
+        print(pull_result.stderr)
+
+        # Push
         push_result = subprocess.run(
-            [git_path, "push"],
+            [git_path, "push", "origin", "main"],
             cwd=repo_path,
             capture_output=True,
             text=True
