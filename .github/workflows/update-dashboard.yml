@@ -22,6 +22,12 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Debug
+        run: |
+          pwd
+          ls -la
+          python --version
+
       - name: Run script
         run: python main.py
 
