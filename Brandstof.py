@@ -162,54 +162,5 @@ def main():
         graph_path
     )
 
-    git_path = r"C:\Program Files\Git\cmd\git.exe"
-    repo_path = Path(__file__).parent
-
-    # Stage changes
-    subprocess.run(
-        [git_path, "add", "."],
-        cwd=repo_path
-    )
-
-    # Commit changes
-    commit_result = subprocess.run(
-        [git_path, "commit", "-m", "Automatic update"],
-        cwd=repo_path,
-        capture_output=True,
-        text=True
-    )
-
-    print("COMMIT:")
-    print(commit_result.stdout)
-    print(commit_result.stderr)
-
-    if commit_result.returncode == 0:
-
-        # Sync with GitHub first
-        pull_result = subprocess.run(
-            [git_path, "pull", "--rebase", "origin", "main"],
-            cwd=repo_path,
-            capture_output=True,
-            text=True
-        )
-
-        print("PULL:")
-        print(pull_result.stdout)
-        print(pull_result.stderr)
-
-        # Only push if pull succeeded
-        if pull_result.returncode == 0:
-
-            push_result = subprocess.run(
-                [git_path, "push", "origin", "main"],
-                cwd=repo_path,
-                capture_output=True,
-                text=True
-            )
-
-            print("PUSH:")
-            print(push_result.stdout)
-            print(push_result.stderr)
-
 if __name__ == "__main__":
     main()
